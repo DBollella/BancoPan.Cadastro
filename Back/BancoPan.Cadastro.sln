@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36511.14 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "env", "env", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B3E4AE0E-C24C-4DE0-9936-7CD77B15CD00}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1A54B1E8-BBDA-47B0-ADFA-7E56EF88AE8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BancoPan.Cadastro.Api", "src\BancoPan.Cadastro.Api\BancoPan.Cadastro.Api.csproj", "{EB5BED73-F5AE-4039-B5E4-C822D323CAF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BancoPan.Cadastro.Application", "src\BancoPan.Cadastro.Application\BancoPan.Cadastro.Application.csproj", "{ED5AC4CB-B516-4143-9601-CF7E2E404CBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BancoPan.Cadastro.Domain", "src\BancoPan.Cadastro.Domain\BancoPan.Cadastro.Domain.csproj", "{1CA14D74-C69A-4CEF-93DD-1853368CBE2D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BancoPan.Cadastro.Infra", "src\BancoPan.Cadastro.Infra\BancoPan.Cadastro.Infra.csproj", "{15CA9566-EBB7-4FA9-BBA7-23BB2543D87D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB5BED73-F5AE-4039-B5E4-C822D323CAF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB5BED73-F5AE-4039-B5E4-C822D323CAF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB5BED73-F5AE-4039-B5E4-C822D323CAF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB5BED73-F5AE-4039-B5E4-C822D323CAF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED5AC4CB-B516-4143-9601-CF7E2E404CBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED5AC4CB-B516-4143-9601-CF7E2E404CBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED5AC4CB-B516-4143-9601-CF7E2E404CBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED5AC4CB-B516-4143-9601-CF7E2E404CBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CA14D74-C69A-4CEF-93DD-1853368CBE2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CA14D74-C69A-4CEF-93DD-1853368CBE2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CA14D74-C69A-4CEF-93DD-1853368CBE2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CA14D74-C69A-4CEF-93DD-1853368CBE2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15CA9566-EBB7-4FA9-BBA7-23BB2543D87D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15CA9566-EBB7-4FA9-BBA7-23BB2543D87D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15CA9566-EBB7-4FA9-BBA7-23BB2543D87D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15CA9566-EBB7-4FA9-BBA7-23BB2543D87D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EB5BED73-F5AE-4039-B5E4-C822D323CAF6} = {B3E4AE0E-C24C-4DE0-9936-7CD77B15CD00}
+		{ED5AC4CB-B516-4143-9601-CF7E2E404CBF} = {B3E4AE0E-C24C-4DE0-9936-7CD77B15CD00}
+		{1CA14D74-C69A-4CEF-93DD-1853368CBE2D} = {B3E4AE0E-C24C-4DE0-9936-7CD77B15CD00}
+		{15CA9566-EBB7-4FA9-BBA7-23BB2543D87D} = {B3E4AE0E-C24C-4DE0-9936-7CD77B15CD00}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F3DF2B98-22A2-4E2B-AF4E-E2FB90F8A966}
+	EndGlobalSection
+EndGlobal
