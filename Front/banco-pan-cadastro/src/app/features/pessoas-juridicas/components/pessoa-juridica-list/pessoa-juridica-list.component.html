@@ -1,0 +1,39 @@
+<p-card header="Pessoas Jurídicas">
+  <div class="actions">
+    <p-button label="Nova Pessoa Jurídica" icon="pi pi-plus" severity="success" (onClick)="router.navigate(['/pessoas-juridicas/novo'])"></p-button>
+  </div>
+
+  <p-table [value]="pessoas" [loading]="loading" [paginator]="true" [rows]="10"
+           [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} empresas">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Razão Social</th>
+        <th>Nome Fantasia</th>
+        <th>CNPJ</th>
+        <th>Email</th>
+        <th>Data Abertura</th>
+        <th>Tempo Atuação</th>
+        <th style="width: 150px">Ações</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-pessoa>
+      <tr>
+        <td>{{ pessoa.razaoSocial }}</td>
+        <td>{{ pessoa.nomeFantasia || '-' }}</td>
+        <td>{{ pessoa.cnpj | cnpj }}</td>
+        <td>{{ pessoa.email }}</td>
+        <td>{{ pessoa.dataAbertura | date:'dd/MM/yyyy' }}</td>
+        <td>{{ pessoa.tempoAtuacao }} anos</td>
+        <td>
+          <p-button icon="pi pi-trash" severity="danger" [text]="true"
+                    (onClick)="confirmDelete(pessoa.id)" pTooltip="Excluir"></p-button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7" class="text-center">Nenhuma pessoa jurídica encontrada</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

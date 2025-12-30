@@ -1,0 +1,21 @@
+.footer {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  border-top: 1px solid #dee2e6;
+
+  .footer-content {
+    text-align: center;
+    color: #6c757d;
+
+    p {
+      margin: 0.25rem 0;
+      font-size: 0.9rem;
+    }
+
+    .version {
+      font-size: 0.8rem;
+      color: #adb5bd;
+    }
+  }
+}

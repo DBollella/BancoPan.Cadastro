@@ -1,0 +1,130 @@
+<p-card [header]="isEditMode ? 'Editar Pessoa Física' : 'Nova Pessoa Física'">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <!-- Dados Pessoais -->
+    <h3>Dados Pessoais</h3>
+    <div class="form-grid">
+      <div class="field col-12 md:col-6">
+        <label for="nome">Nome Completo *</label>
+        <input pInputText id="nome" formControlName="nome" placeholder="João da Silva" class="w-full" />
+        <small class="p-error" *ngIf="form.get('nome')?.invalid && form.get('nome')?.touched">
+          Nome é obrigatório
+        </small>
+      </div>
+
+      <div class="field col-12 md:col-6">
+        <label for="email">E-mail *</label>
+        <input pInputText id="email" formControlName="email" type="email" placeholder="joao@email.com" class="w-full" />
+        <small class="p-error" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+          E-mail válido é obrigatório
+        </small>
+      </div>
+
+      <div class="field col-12 md:col-4">
+        <label for="cpf">CPF *</label>
+        <p-inputMask id="cpf" formControlName="cpf" mask="999.999.999-99" placeholder="000.000.000-00"
+                     [disabled]="isEditMode" styleClass="w-full"></p-inputMask>
+        <small class="p-error" *ngIf="form.get('cpf')?.invalid && form.get('cpf')?.touched">
+          CPF válido é obrigatório
+        </small>
+      </div>
+
+      <div class="field col-12 md:col-4">
+        <label for="rg">RG</label>
+        <input pInputText id="rg" formControlName="rg" placeholder="12.345.678-9" class="w-full" />
+      </div>
+
+      <div class="field col-12 md:col-4">
+        <label for="telefone">Telefone</label>
+        <p-inputMask id="telefone" formControlName="telefone" mask="(99) 99999-9999"
+                     placeholder="(11) 98765-4321" styleClass="w-full"></p-inputMask>
+      </div>
+
+      <div class="field col-12 md:col-4">
+        <label for="dataNascimento">Data de Nascimento *</label>
+        <p-calendar id="dataNascimento" formControlName="dataNascimento" dateFormat="dd/mm/yy"
+                    [showIcon]="true" placeholder="dd/mm/aaaa" styleClass="w-full"></p-calendar>
+        <small class="p-error" *ngIf="form.get('dataNascimento')?.invalid && form.get('dataNascimento')?.touched">
+          Data de nascimento é obrigatória
+        </small>
+      </div>
+    </div>
+
+    <p-divider></p-divider>
+
+    <!-- Endereço -->
+    <h3>Endereço</h3>
+    <div class="form-grid">
+      <div class="field col-12 md:col-3">
+        <label for="cep">CEP *</label>
+        <p-inputMask id="cep" formControlName="cep" mask="99999-999" placeholder="00000-000"
+                     (onComplete)="onCepComplete($event)" [disabled]="loadingCep || isEditMode"
+                     styleClass="w-full"></p-inputMask>
+        <small class="p-error" *ngIf="form.get('cep')?.invalid && form.get('cep')?.touched">
+          CEP é obrigatório
+        </small>
+      </div>
+
+      <div class="field col-12 md:col-7">
+        <label for="logradouro">Logradouro *</label>
+        <input pInputText id="logradouro" formControlName="logradouro" [disabled]="isEditMode"
+               placeholder="Rua, Avenida..." class="w-full" />
+      </div>
+
+      <div class="field col-12 md:col-2">
+        <label for="numero">Número *</label>
+        <input pInputText id="numero" formControlName="numero" [disabled]="isEditMode"
+               placeholder="123" class="w-full" />
+      </div>
+
+      <div class="field col-12 md:col-4">
+        <label for="complemento">Complemento</label>
+        <input pInputText id="complemento" formControlName="complemento" [disabled]="isEditMode"
+               placeholder="Apto, Bloco..." class="w-full" />
+      </div>
+
+      <div class="field col-12 md:col-4">
+        <label for="bairro">Bairro *</label>
+        <input pInputText id="bairro" formControlName="bairro" [disabled]="isEditMode"
+               placeholder="Centro" class="w-full" />
+      </div>
+
+      <div class="field col-12 md:col-4">
+        <label for="localidade">Cidade *</label>
+        <input pInputText id="localidade" formControlName="localidade" [disabled]="isEditMode"
+               placeholder="São Paulo" class="w-full" />
+      </div>
+
+      <div class="field col-12 md:col-2">
+        <label for="uf">UF *</label>
+        <p-dropdown id="uf" formControlName="uf" [options]="ufs" [disabled]="isEditMode"
+                    optionLabel="sigla" optionValue="sigla" placeholder="SP" styleClass="w-full"></p-dropdown>
+      </div>
+
+      <div class="field col-12 md:col-3">
+        <label for="estado">Estado</label>
+        <input pInputText id="estado" formControlName="estado" [disabled]="true" class="w-full" />
+      </div>
+
+      <div class="field col-12 md:col-3">
+        <label for="regiao">Região</label>
+        <input pInputText id="regiao" formControlName="regiao" [disabled]="true" class="w-full" />
+      </div>
+
+      <div class="field col-12 md:col-2">
+        <label for="ibge">IBGE</label>
+        <input pInputText id="ibge" formControlName="ibge" [disabled]="true" class="w-full" />
+      </div>
+
+      <div class="field col-12 md:col-2">
+        <label for="ddd">DDD</label>
+        <input pInputText id="ddd" formControlName="ddd" [disabled]="true" class="w-full" />
+      </div>
+    </div>
+
+    <div class="actions">
+      <p-button label="Cancelar" severity="secondary" [text]="true" (onClick)="cancel()" [disabled]="loading"></p-button>
+      <p-button label="Salvar" type="submit" [loading]="loading" [disabled]="loading"></p-button>
+    </div>
+  </form>
+</p-card>

@@ -1,0 +1,24 @@
+<div class="home-container">
+  <h1>Bem-vindo ao Sistema de Cadastro</h1>
+  <p class="subtitle">Banco Pan - Gerenciamento de Cadastros</p>
+
+  <div class="cards-grid">
+    <p-card header="Endereços" subheader="Gerenciar endereços">
+      <i class="pi pi-map-marker card-icon"></i>
+      <p>Cadastre e consulte endereços com integração ViaCEP</p>
+      <p-button label="Acessar" icon="pi pi-arrow-right" (onClick)="navigateTo('/enderecos')"></p-button>
+    </p-card>
+
+    <p-card header="Pessoas Físicas" subheader="Gerenciar pessoas físicas">
+      <i class="pi pi-user card-icon"></i>
+      <p>Cadastro completo de pessoas físicas com CPF</p>
+      <p-button label="Acessar" icon="pi pi-arrow-right" (onClick)="navigateTo('/pessoas-fisicas')"></p-button>
+    </p-card>
+
+    <p-card header="Pessoas Jurídicas" subheader="Gerenciar empresas">
+      <i class="pi pi-briefcase card-icon"></i>
+      <p>Cadastro de empresas com CNPJ</p>
+      <p-button label="Acessar" icon="pi pi-arrow-right" (onClick)="navigateTo('/pessoas-juridicas')"></p-button>
+    </p-card>
+  </div>
+</div>
