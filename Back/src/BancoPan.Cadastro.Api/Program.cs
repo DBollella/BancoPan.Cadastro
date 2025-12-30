@@ -22,9 +22,11 @@ builder.Services.AddDbContext<CadastroDbContext>(options =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddHttpClient<IViaCepService, ViaCepService>();
 
-builder.Services.AddScoped<EnderecoService>();
-builder.Services.AddScoped<PessoaFisicaService>();
-builder.Services.AddScoped<PessoaJuridicaService>();
+builder.Services.AddScoped<IEnderecoService, EnderecoService>();
+builder.Services.AddScoped<IPessoaFisicaService, PessoaFisicaService>();
+builder.Services.AddScoped<IPessoaJuridicaService, PessoaJuridicaService>();
+
+builder.Services.AddHealthChecks();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -41,7 +43,7 @@ using (var scope = app.Services.CreateScope())
 
     try
     {
-        logger.LogInformation("Iniciando criação do banco de dados...");
+        logger.LogInformation("Iniciando criacao do banco de dados...");
         var context = services.GetRequiredService<CadastroDbContext>();
 
         logger.LogInformation("Criando banco de dados e tabelas...");
@@ -51,13 +53,13 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception ex)
     {
-        logger.LogError(ex, "ERRO CRÍTICO ao aplicar migrations no banco de dados");
+        logger.LogError(ex, "ERRO CRITICO ao aplicar migrations no banco de dados");
         throw;
     }
 }
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "QA")
 {
     app.UseSwagger();
     app.UseSwaggerUI();
@@ -68,5 +70,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHealthChecks("/health");
 
 app.Run();

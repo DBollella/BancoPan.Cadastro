@@ -9,16 +9,16 @@ Guia rápido para iniciar o ambiente de desenvolvimento usando Docker Compose.
 
 ## Iniciar Ambiente - FORMA MAIS RÁPIDA
 
+Obs: Executar comandos no PowerShell
+
 ```bash
 cd Back
-PREPARAR-AMBIENTE.bat
+.\PREPARAR-AMBIENTE
 ```
-
 O script faz tudo automaticamente: verifica Docker, limpa ambiente antigo, constrói imagens e inicia todos os serviços.
 
 ## Iniciar Ambiente - FORMA MANUAL
 
-```bash
 # 1. Build do Frontend
 cd "Front/banco-pan-cadastro"
 docker build -t bancopan-frontend .
@@ -30,12 +30,12 @@ docker-compose up -d --build
 
 ## Acessar os Serviços
 
-| Serviço | URL/Host | Credenciais |
-|---------|----------|-------------|
-| Frontend | http://localhost:4200 | - |
-| API Backend | http://localhost:5000 | - |
-| SQL Server | `localhost:1433` | User: `sa` / Password: `BancoPan@2025` |
-| Redis | `localhost:6379` | - |
+| Serviço    | URL/Host              | Credenciais                            |  
+|------------|-----------------------|----------------------------------------|
+| Frontend   | http://localhost:4200 |                     -                  |
+| API Backend| http://localhost:5000 |                     -                  |
+| SQL Server | `localhost:1433`      | User: `sa` / Password: `BancoPan@2025` |
+| Redis      | `localhost:6379`      |                     -                  |
 
 **Ambiente**: QA (`ASPNETCORE_ENVIRONMENT=QA`)
 
