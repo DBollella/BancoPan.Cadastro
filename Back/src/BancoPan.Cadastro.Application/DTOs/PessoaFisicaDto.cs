@@ -10,6 +10,7 @@ public class PessoaFisicaDto
     public DateTime DataNascimento { get; set; }
     public string? Rg { get; set; }
     public int Idade { get; set; }
+    public Guid EnderecoId { get; set; }
     public EnderecoDto? Endereco { get; set; }
     public DateTime CriadoEm { get; set; }
     public DateTime? AtualizadoEm { get; set; }

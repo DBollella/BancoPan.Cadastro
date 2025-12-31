@@ -11,6 +11,7 @@ public class PessoaJuridicaDto
     public DateTime DataAbertura { get; set; }
     public string? InscricaoEstadual { get; set; }
     public int TempoAtuacao { get; set; }
+    public Guid EnderecoId { get; set; }
     public EnderecoDto? Endereco { get; set; }
     public DateTime CriadoEm { get; set; }
     public DateTime? AtualizadoEm { get; set; }

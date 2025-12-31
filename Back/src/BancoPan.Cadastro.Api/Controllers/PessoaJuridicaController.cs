@@ -7,11 +7,11 @@ namespace BancoPan.Cadastro.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PessoasJuridicasController : ControllerBase
+public class PessoaJuridicaController : ControllerBase
 {
     private readonly IPessoaJuridicaService _pessoaJuridicaService;
 
-    public PessoasJuridicasController(IPessoaJuridicaService pessoaJuridicaService)
+    public PessoaJuridicaController(IPessoaJuridicaService pessoaJuridicaService)
     {
         _pessoaJuridicaService = pessoaJuridicaService;
     }

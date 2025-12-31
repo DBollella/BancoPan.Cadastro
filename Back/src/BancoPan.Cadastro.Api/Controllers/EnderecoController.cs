@@ -6,11 +6,11 @@ namespace BancoPan.Cadastro.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class EnderecosController : ControllerBase
+public class EnderecoController : ControllerBase
 {
     private readonly IEnderecoService _enderecoService;
 
-    public EnderecosController(IEnderecoService enderecoService)
+    public EnderecoController(IEnderecoService enderecoService)
     {
         _enderecoService = enderecoService;
     }

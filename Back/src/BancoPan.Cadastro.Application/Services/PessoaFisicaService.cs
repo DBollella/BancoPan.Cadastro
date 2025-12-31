@@ -140,6 +140,7 @@ public class PessoaFisicaService : IPessoaFisicaService
             DataNascimento = pessoa.DataNascimento,
             Rg = pessoa.Rg,
             Idade = pessoa.CalcularIdade(),
+            EnderecoId = pessoa.EnderecoId,
             Endereco = pessoa.Endereco != null ? new EnderecoDto
             {
                 Id = pessoa.Endereco.Id,

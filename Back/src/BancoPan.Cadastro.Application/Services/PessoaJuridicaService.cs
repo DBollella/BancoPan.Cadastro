@@ -143,6 +143,7 @@ public class PessoaJuridicaService : IPessoaJuridicaService
             DataAbertura = pessoa.DataAbertura,
             InscricaoEstadual = pessoa.InscricaoEstadual,
             TempoAtuacao = pessoa.CalcularTempoAtuacao(),
+            EnderecoId = pessoa.EnderecoId,
             Endereco = pessoa.Endereco != null ? new EnderecoDto
             {
                 Id = pessoa.Endereco.Id,
