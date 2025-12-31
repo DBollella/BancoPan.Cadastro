@@ -4,45 +4,45 @@ import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { TooltipModule } from 'primeng/tooltip';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { PessoaFisicaService } from '../../services/pessoa-fisica.service';
-import { PessoaFisica } from '../../models/pessoa-fisica.model';
-import { CpfPipe } from '../../../../shared/pipes/cpf.pipe';
+import { EnderecoService } from '../../services/endereco.service';
+import { Endereco } from '../../models/endereco.model';
 
 @Component({
-  selector: 'app-pessoa-fisica-list',
+  selector: 'app-endereco-list',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, CardModule, CpfPipe],
-  templateUrl: './pessoa-fisica-list.component.html',
-  styleUrl: './pessoa-fisica-list.component.scss'
+  imports: [CommonModule, TableModule, ButtonModule, CardModule, TooltipModule],
+  templateUrl: './endereco-list.component.html',
+  styleUrl: './endereco-list.component.scss'
 })
-export class PessoaFisicaListComponent implements OnInit {
-  pessoas: PessoaFisica[] = [];
+export class EnderecoListComponent implements OnInit {
+  enderecos: Endereco[] = [];
   loading = false;
 
   constructor(
-    private pessoaFisicaService: PessoaFisicaService,
+    private enderecoService: EnderecoService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     public router: Router
   ) {}
 
   ngOnInit() {
-    this.loadPessoas();
+    this.loadEnderecos();
   }
 
-  loadPessoas() {
+  loadEnderecos() {
     this.loading = true;
-    this.pessoaFisicaService.getAll().subscribe({
+    this.enderecoService.getAll().subscribe({
       next: (data) => {
-        this.pessoas = data;
+        this.enderecos = data;
         this.loading = false;
       },
-      error: () => {
+      error: (error) => {
         this.messageService.add({
           severity: 'error',
           summary: 'Erro',
-          detail: 'Erro ao carregar pessoas físicas'
+          detail: 'Erro ao carregar endereços'
         });
         this.loading = false;
       }
@@ -51,7 +51,7 @@ export class PessoaFisicaListComponent implements OnInit {
 
   confirmDelete(id: string) {
     this.confirmationService.confirm({
-      message: 'Tem certeza que deseja excluir esta pessoa?',
+      message: 'Tem certeza que deseja excluir este endereço?',
       header: 'Confirmar Exclusão',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -61,20 +61,20 @@ export class PessoaFisicaListComponent implements OnInit {
   }
 
   delete(id: string) {
-    this.pessoaFisicaService.delete(id).subscribe({
+    this.enderecoService.delete(id).subscribe({
       next: () => {
         this.messageService.add({
           severity: 'success',
           summary: 'Sucesso',
-          detail: 'Pessoa física excluída com sucesso'
+          detail: 'Endereço excluído com sucesso'
         });
-        this.loadPessoas();
+        this.loadEnderecos();
       },
       error: () => {
         this.messageService.add({
           severity: 'error',
           summary: 'Erro',
-          detail: 'Erro ao excluir pessoa física'
+          detail: 'Erro ao excluir endereço'
         });
       }
     });

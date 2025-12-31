@@ -1,6 +1,6 @@
-<p-card header="Pessoas Físicas">
+<p-card header="Pessoa Física">
   <div class="actions">
-    <p-button label="Nova Pessoa Física" icon="pi pi-plus" severity="success" (onClick)="router.navigate(['/pessoas-fisicas/novo'])"></p-button>
+    <p-button label="Nova Pessoa Física" icon="pi pi-plus" severity="success" (onClick)="router.navigate(['/pessoa-fisica/novo'])"></p-button>
   </div>
 
   <p-table [value]="pessoas" [loading]="loading" [paginator]="true" [rows]="10"
@@ -23,6 +23,8 @@
         <td>{{ pessoa.dataNascimento | date:'dd/MM/yyyy' }}</td>
         <td>{{ pessoa.idade }} anos</td>
         <td>
+          <p-button icon="pi pi-pencil" severity="primary" [text]="true"
+                    (onClick)="router.navigate(['/pessoa-fisica', pessoa.id, 'editar'])" pTooltip="Editar"></p-button>
           <p-button icon="pi pi-trash" severity="danger" [text]="true"
                     (onClick)="confirmDelete(pessoa.id)" pTooltip="Excluir"></p-button>
         </td>

@@ -21,14 +21,14 @@ export class MenuComponent {
         command: () => this.router.navigate(['/'])
       },
       {
-        label: 'Pessoas Físicas',
+        label: 'Pessoa Física',
         icon: 'pi pi-user',
-        command: () => this.router.navigate(['/pessoas-fisicas'])
+        command: () => this.router.navigate(['/pessoa-fisica'])
       },
       {
-        label: 'Pessoas Jurídicas',
+        label: 'Pessoa Jurídica',
         icon: 'pi pi-briefcase',
-        command: () => this.router.navigate(['/pessoas-juridicas'])
+        command: () => this.router.navigate(['/pessoa-juridica'])
       }
     ];
   }

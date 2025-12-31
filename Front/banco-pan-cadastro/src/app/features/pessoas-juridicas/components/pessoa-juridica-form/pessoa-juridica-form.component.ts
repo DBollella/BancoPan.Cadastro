@@ -12,9 +12,9 @@ import { DividerModule } from 'primeng/divider';
 import { MessageService } from 'primeng/api';
 import { switchMap } from 'rxjs/operators';
 import { PessoaJuridicaService } from '../../services/pessoa-juridica.service';
-import { EnderecoService } from '../../../enderecos/services/endereco.service';
+import { EnderecoService } from '../../../endereco/services/endereco.service';
 import { CriarPessoaJuridicaDto, AtualizarPessoaJuridicaDto } from '../../models/pessoa-juridica.model';
-import { CriarEnderecoDto } from '../../../enderecos/models/endereco.model';
+import { CriarEnderecoDto } from '../../../endereco/models/endereco.model';
 import { cnpjValidator } from '../../../../shared/validators/cnpj.validator';
 
 interface UF {
@@ -180,7 +180,7 @@ export class PessoaJuridicaFormComponent implements OnInit {
           detail: 'Erro ao carregar pessoa jurídica'
         });
         this.loading = false;
-        this.router.navigate(['/pessoas-juridicas']);
+        this.router.navigate(['/pessoa-juridica']);
       }
     });
   }
@@ -212,7 +212,7 @@ export class PessoaJuridicaFormComponent implements OnInit {
             summary: 'Sucesso',
             detail: 'Pessoa jurídica atualizada com sucesso'
           });
-          this.router.navigate(['/pessoas-juridicas']);
+          this.router.navigate(['/pessoa-juridica']);
         },
         error: () => {
           this.messageService.add({
@@ -259,7 +259,7 @@ export class PessoaJuridicaFormComponent implements OnInit {
             summary: 'Sucesso',
             detail: 'Pessoa jurídica criada com sucesso'
           });
-          this.router.navigate(['/pessoas-juridicas']);
+          this.router.navigate(['/pessoa-juridica']);
         },
         error: () => {
           this.messageService.add({
@@ -280,6 +280,6 @@ export class PessoaJuridicaFormComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigate(['/pessoas-juridicas']);
+    this.router.navigate(['/pessoa-juridica']);
   }
 }

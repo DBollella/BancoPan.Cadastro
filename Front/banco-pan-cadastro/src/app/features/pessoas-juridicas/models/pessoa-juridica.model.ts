@@ -1,4 +1,4 @@
-import { Endereco } from '../../enderecos/models/endereco.model';
+import { Endereco } from '../../endereco/models/endereco.model';
 
 export interface PessoaJuridica {
   id: string;

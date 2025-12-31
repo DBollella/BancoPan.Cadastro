@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { TooltipModule } from 'primeng/tooltip';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { EnderecoService } from '../../services/endereco.service';
 import { Endereco } from '../../models/endereco.model';
@@ -11,7 +12,7 @@ import { Endereco } from '../../models/endereco.model';
 @Component({
   selector: 'app-endereco-list',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, CardModule],
+  imports: [CommonModule, TableModule, ButtonModule, CardModule, TooltipModule],
   templateUrl: './endereco-list.component.html',
   styleUrl: './endereco-list.component.scss'
 })

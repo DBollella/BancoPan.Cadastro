@@ -1,0 +1,166 @@
+<p-card [header]="isEditMode ? 'Editar Endereço' : 'Novo Endereço'">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-grid">
+      <div class="field col-12 md:col-3">
+        <label for="cep">CEP *</label>
+        <p-inputMask
+          id="cep"
+          formControlName="cep"
+          mask="99999-999"
+          placeholder="00000-000"
+          (onComplete)="onCepComplete($event)"
+          [disabled]="loadingCep"
+          styleClass="w-full">
+        </p-inputMask>
+        <small class="p-error" *ngIf="form.get('cep')?.invalid && form.get('cep')?.touched">
+          CEP é obrigatório
+        </small>
+      </div>
+
+      <div class="field col-12 md:col-1 flex align-items-end">
+        <p-button
+          icon="pi pi-search"
+          label="Buscar"
+          [loading]="loadingCep"
+          [disabled]="!form.get('cep')?.value || loadingCep"
+          (onClick)="buscarCep()"
+          styleClass="w-full">
+        </p-button>
+      </div>
+
+      <div class="field col-12 md:col-6">
+        <label for="logradouro">Logradouro *</label>
+        <input
+          pInputText
+          id="logradouro"
+          formControlName="logradouro"
+          placeholder="Rua, Avenida..."
+          class="w-full" />
+        <small class="p-error" *ngIf="form.get('logradouro')?.invalid && form.get('logradouro')?.touched">
+          Logradouro é obrigatório
+        </small>
+      </div>
+
+      <div class="field col-12 md:col-2">
+        <label for="numero">Número *</label>
+        <input
+          pInputText
+          id="numero"
+          formControlName="numero"
+          placeholder="123"
+          class="w-full" />
+        <small class="p-error" *ngIf="form.get('numero')?.invalid && form.get('numero')?.touched">
+          Número é obrigatório
+        </small>
+      </div>
+
+      <div class="field col-12 md:col-4">
+        <label for="complemento">Complemento</label>
+        <input
+          pInputText
+          id="complemento"
+          formControlName="complemento"
+          placeholder="Apto, Bloco..."
+          class="w-full" />
+      </div>
+
+      <div class="field col-12 md:col-4">
+        <label for="bairro">Bairro *</label>
+        <input
+          pInputText
+          id="bairro"
+          formControlName="bairro"
+          placeholder="Centro, Vila..."
+          class="w-full" />
+        <small class="p-error" *ngIf="form.get('bairro')?.invalid && form.get('bairro')?.touched">
+          Bairro é obrigatório
+        </small>
+      </div>
+
+      <div class="field col-12 md:col-4">
+        <label for="localidade">Cidade *</label>
+        <input
+          pInputText
+          id="localidade"
+          formControlName="localidade"
+          placeholder="São Paulo"
+          class="w-full" />
+        <small class="p-error" *ngIf="form.get('localidade')?.invalid && form.get('localidade')?.touched">
+          Cidade é obrigatória
+        </small>
+      </div>
+
+      <div class="field col-12 md:col-2">
+        <label for="uf">UF *</label>
+        <p-dropdown
+          id="uf"
+          formControlName="uf"
+          [options]="ufs"
+          optionLabel="sigla"
+          optionValue="sigla"
+          placeholder="Selecione"
+          styleClass="w-full">
+        </p-dropdown>
+        <small class="p-error" *ngIf="form.get('uf')?.invalid && form.get('uf')?.touched">
+          UF é obrigatório
+        </small>
+      </div>
+
+      <div class="field col-12 md:col-3">
+        <label for="estado">Estado *</label>
+        <input
+          pInputText
+          id="estado"
+          formControlName="estado"
+          placeholder="São Paulo"
+          class="w-full" />
+      </div>
+
+      <div class="field col-12 md:col-3">
+        <label for="regiao">Região *</label>
+        <input
+          pInputText
+          id="regiao"
+          formControlName="regiao"
+          placeholder="Sudeste"
+          class="w-full" />
+      </div>
+
+      <div class="field col-12 md:col-2">
+        <label for="ibge">IBGE *</label>
+        <input
+          pInputText
+          id="ibge"
+          formControlName="ibge"
+          placeholder="1234567"
+          class="w-full" />
+      </div>
+
+      <div class="field col-12 md:col-2">
+        <label for="ddd">DDD *</label>
+        <input
+          pInputText
+          id="ddd"
+          formControlName="ddd"
+          placeholder="11"
+          class="w-full" />
+      </div>
+    </div>
+
+    <div class="actions">
+      <p-button
+        label="Cancelar"
+        severity="secondary"
+        [text]="true"
+        (onClick)="cancel()"
+        [disabled]="loading">
+      </p-button>
+      <p-button
+        label="Salvar"
+        type="submit"
+        [loading]="loading"
+        [disabled]="loading">
+      </p-button>
+    </div>
+  </form>
+</p-card>

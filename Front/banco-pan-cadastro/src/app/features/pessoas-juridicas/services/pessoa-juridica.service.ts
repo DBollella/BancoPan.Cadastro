@@ -8,7 +8,7 @@ import { PessoaJuridica, CriarPessoaJuridicaDto, AtualizarPessoaJuridicaDto } fr
   providedIn: 'root'
 })
 export class PessoaJuridicaService {
-  private apiUrl = `${environment.apiUrl}/pessoasjuridicas`;
+  private apiUrl = `${environment.apiUrl}/PessoaJuridica`;
 
   constructor(private http: HttpClient) { }
 

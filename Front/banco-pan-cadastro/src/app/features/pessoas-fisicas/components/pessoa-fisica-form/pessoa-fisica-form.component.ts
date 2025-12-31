@@ -12,9 +12,9 @@ import { DividerModule } from 'primeng/divider';
 import { MessageService } from 'primeng/api';
 import { switchMap } from 'rxjs/operators';
 import { PessoaFisicaService } from '../../services/pessoa-fisica.service';
-import { EnderecoService } from '../../../enderecos/services/endereco.service';
+import { EnderecoService } from '../../../endereco/services/endereco.service';
 import { CriarPessoaFisicaDto, AtualizarPessoaFisicaDto } from '../../models/pessoa-fisica.model';
-import { CriarEnderecoDto } from '../../../enderecos/models/endereco.model';
+import { CriarEnderecoDto } from '../../../endereco/models/endereco.model';
 import { cpfValidator } from '../../../../shared/validators/cpf.validator';
 
 interface UF {
@@ -178,7 +178,7 @@ export class PessoaFisicaFormComponent implements OnInit {
           detail: 'Erro ao carregar pessoa física'
         });
         this.loading = false;
-        this.router.navigate(['/pessoas-fisicas']);
+        this.router.navigate(['/pessoa-fisica']);
       }
     });
   }
@@ -209,7 +209,7 @@ export class PessoaFisicaFormComponent implements OnInit {
             summary: 'Sucesso',
             detail: 'Pessoa física atualizada com sucesso'
           });
-          this.router.navigate(['/pessoas-fisicas']);
+          this.router.navigate(['/pessoa-fisica']);
         },
         error: () => {
           this.messageService.add({
@@ -255,13 +255,15 @@ export class PessoaFisicaFormComponent implements OnInit {
             summary: 'Sucesso',
             detail: 'Pessoa física criada com sucesso'
           });
-          this.router.navigate(['/pessoas-fisicas']);
+          this.router.navigate(['/pessoa-fisica']);
         },
-        error: () => {
+        error: (error) => {
+          console.error('Erro ao criar pessoa física:', error);
+          const errorMessage = error?.error?.message || error?.message || 'Erro ao criar pessoa física';
           this.messageService.add({
             severity: 'error',
             summary: 'Erro',
-            detail: 'Erro ao criar pessoa física'
+            detail: errorMessage
           });
           this.loading = false;
         }
@@ -276,6 +278,6 @@ export class PessoaFisicaFormComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigate(['/pessoas-fisicas']);
+    this.router.navigate(['/pessoa-fisica']);
   }
 }
