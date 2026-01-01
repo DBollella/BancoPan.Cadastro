@@ -14,7 +14,7 @@ import { switchMap } from 'rxjs/operators';
 import { PessoaJuridicaService } from '../../services/pessoa-juridica.service';
 import { EnderecoService } from '../../../endereco/services/endereco.service';
 import { CriarPessoaJuridicaDto, AtualizarPessoaJuridicaDto } from '../../models/pessoa-juridica.model';
-import { CriarEnderecoDto } from '../../../endereco/models/endereco.model';
+import { CriarEnderecoDto, AtualizarEnderecoDto } from '../../../endereco/models/endereco.model';
 import { cnpjValidator } from '../../../../shared/validators/cnpj.validator';
 
 interface UF {
@@ -43,6 +43,7 @@ export class PessoaJuridicaFormComponent implements OnInit {
   form!: FormGroup;
   isEditMode = false;
   pessoaId?: string;
+  enderecoId?: string;
   loading = false;
   loadingCep = false;
 
@@ -101,9 +102,9 @@ export class PessoaJuridicaFormComponent implements OnInit {
     });
   }
 
-  onCepComplete(event: any) {
-    const cep = event.value?.replace(/\D/g, '');
-    if (cep && cep.length === 8) {
+  onCepComplete() {
+    const cep = this.form.get('cep')?.value?.replace(/\D/g, '');
+    if (cep && cep.length === 8 && !this.loadingCep) {
       this.consultarCep(cep);
     }
   }
@@ -146,6 +147,8 @@ export class PessoaJuridicaFormComponent implements OnInit {
     this.loading = true;
     this.pessoaJuridicaService.getById(this.pessoaId).subscribe({
       next: (pessoa) => {
+        this.enderecoId = pessoa.enderecoId;
+
         this.form.patchValue({
           razaoSocial: pessoa.razaoSocial,
           nomeFantasia: pessoa.nomeFantasia,
@@ -186,26 +189,53 @@ export class PessoaJuridicaFormComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('onSubmit chamado');
+    console.log('Form valid:', this.form.valid);
+    console.log('Form value:', this.form.value);
+
     if (this.form.invalid) {
+      console.log('Form inválido, campos com erro:');
       Object.keys(this.form.controls).forEach(key => {
-        this.form.get(key)?.markAsTouched();
+        const control = this.form.get(key);
+        if (control?.invalid) {
+          console.log(`Campo ${key}:`, control.errors);
+        }
+        control?.markAsTouched();
       });
       return;
     }
 
     this.loading = true;
+    console.log('Iniciando salvamento...');
 
     if (this.isEditMode && this.pessoaId) {
-      const dto: AtualizarPessoaJuridicaDto = {
-        razaoSocial: this.form.value.razaoSocial,
-        nomeFantasia: this.form.value.nomeFantasia,
-        email: this.form.value.email,
-        telefone: this.form.value.telefone,
-        dataAbertura: this.formatDate(this.form.value.dataAbertura),
-        inscricaoEstadual: this.form.value.inscricaoEstadual
+      const enderecoDto: AtualizarEnderecoDto = {
+        cep: this.form.value.cep,
+        logradouro: this.form.value.logradouro,
+        numero: this.form.value.numero,
+        complemento: this.form.value.complemento,
+        bairro: this.form.value.bairro,
+        localidade: this.form.value.localidade,
+        uf: this.form.value.uf,
+        estado: this.form.value.estado,
+        regiao: this.form.value.regiao,
+        ibge: this.form.value.ibge,
+        ddd: this.form.value.ddd
       };
 
-      this.pessoaJuridicaService.update(this.pessoaId, dto).subscribe({
+      this.enderecoService.update(this.enderecoId!, enderecoDto).pipe(
+        switchMap(() => {
+          const pessoaDto: AtualizarPessoaJuridicaDto = {
+            razaoSocial: this.form.value.razaoSocial,
+            nomeFantasia: this.form.value.nomeFantasia,
+            email: this.form.value.email,
+            telefone: this.form.value.telefone,
+            dataAbertura: this.formatDate(this.form.value.dataAbertura),
+            inscricaoEstadual: this.form.value.inscricaoEstadual
+          };
+          return this.pessoaJuridicaService.update(this.pessoaId!, pessoaDto);
+        })
+      ).subscribe({
         next: () => {
           this.messageService.add({
             severity: 'success',
@@ -214,11 +244,13 @@ export class PessoaJuridicaFormComponent implements OnInit {
           });
           this.router.navigate(['/pessoa-juridica']);
         },
-        error: () => {
+        error: (error) => {
+          console.error('Erro ao atualizar pessoa jurídica:', error);
+          const errorMessage = error?.error?.message || error?.message || 'Erro ao atualizar pessoa jurídica';
           this.messageService.add({
             severity: 'error',
             summary: 'Erro',
-            detail: 'Erro ao atualizar pessoa jurídica'
+            detail: errorMessage
           });
           this.loading = false;
         }
@@ -261,11 +293,13 @@ export class PessoaJuridicaFormComponent implements OnInit {
           });
           this.router.navigate(['/pessoa-juridica']);
         },
-        error: () => {
+        error: (error) => {
+          console.error('Erro ao criar pessoa jurídica:', error);
+          const errorMessage = error?.error?.message || error?.message || 'Erro ao criar pessoa jurídica';
           this.messageService.add({
             severity: 'error',
             summary: 'Erro',
-            detail: 'Erro ao criar pessoa jurídica'
+            detail: errorMessage
           });
           this.loading = false;
         }

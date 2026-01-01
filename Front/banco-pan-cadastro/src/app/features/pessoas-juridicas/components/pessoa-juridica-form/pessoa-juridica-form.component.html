@@ -4,7 +4,8 @@
     <!-- Dados Empresariais -->
     <h3>Dados Empresariais</h3>
     <div class="form-grid">
-      <div class="field col-12 md:col-6">
+      <!-- Linha 1: Razão Social -->
+      <div class="field col-12">
         <label for="razaoSocial">Razão Social *</label>
         <input pInputText id="razaoSocial" formControlName="razaoSocial" placeholder="Empresa LTDA" class="w-full" />
         <small class="p-error" *ngIf="form.get('razaoSocial')?.invalid && form.get('razaoSocial')?.touched">
@@ -12,23 +13,13 @@
         </small>
       </div>
 
-      <div class="field col-12 md:col-6">
-        <label for="nomeFantasia">Nome Fantasia</label>
-        <input pInputText id="nomeFantasia" formControlName="nomeFantasia" placeholder="Empresa" class="w-full" />
-      </div>
-
-      <div class="field col-12 md:col-6">
+      <!-- Linha 2: Email, CNPJ, Insc. Estadual -->
+      <div class="field col-12 md:col-4">
         <label for="email">E-mail *</label>
         <input pInputText id="email" formControlName="email" type="email" placeholder="contato@empresa.com" class="w-full" />
         <small class="p-error" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
           E-mail válido é obrigatório
         </small>
-      </div>
-
-      <div class="field col-12 md:col-6">
-        <label for="telefone">Telefone</label>
-        <p-inputMask id="telefone" formControlName="telefone" mask="(99) 9999-9999"
-                     placeholder="(11) 3456-7890" styleClass="w-full"></p-inputMask>
       </div>
 
       <div class="field col-12 md:col-4">
@@ -41,17 +32,29 @@
       </div>
 
       <div class="field col-12 md:col-4">
-        <label for="inscricaoEstadual">Inscrição Estadual</label>
+        <label for="inscricaoEstadual">Insc. Estadual</label>
         <input pInputText id="inscricaoEstadual" formControlName="inscricaoEstadual" placeholder="123.456.789.012" class="w-full" />
       </div>
 
+      <!-- Linha 3: Telefone, Data Abertura, Nome Fantasia -->
       <div class="field col-12 md:col-4">
-        <label for="dataAbertura">Data de Abertura *</label>
+        <label for="telefone">Telefone</label>
+        <p-inputMask id="telefone" formControlName="telefone" mask="(99) 9999-9999"
+                     placeholder="(11) 3456-7890" styleClass="w-full"></p-inputMask>
+      </div>
+
+      <div class="field col-12 md:col-4">
+        <label for="dataAbertura">Data Abertura *</label>
         <p-calendar id="dataAbertura" formControlName="dataAbertura" dateFormat="dd/mm/yy"
                     [showIcon]="true" placeholder="dd/mm/aaaa" styleClass="w-full"></p-calendar>
         <small class="p-error" *ngIf="form.get('dataAbertura')?.invalid && form.get('dataAbertura')?.touched">
           Data de abertura é obrigatória
         </small>
+      </div>
+
+      <div class="field col-12 md:col-4">
+        <label for="nomeFantasia">Nome Fantasia</label>
+        <input pInputText id="nomeFantasia" formControlName="nomeFantasia" placeholder="Empresa" class="w-full" />
       </div>
     </div>
 
@@ -60,17 +63,19 @@
     <!-- Endereço -->
     <h3>Endereço</h3>
     <div class="form-grid">
-      <div class="field col-12 md:col-3">
+      <!-- Linha 1: CEP, Logradouro, Número, Complemento -->
+      <div class="field col-12 md:col-2">
         <label for="cep">CEP *</label>
         <p-inputMask id="cep" formControlName="cep" mask="99999-999" placeholder="00000-000"
-                     (onComplete)="onCepComplete($event)" [disabled]="loadingCep || isEditMode"
+                     (onComplete)="onCepComplete()"
+                     [disabled]="loadingCep || isEditMode"
                      styleClass="w-full"></p-inputMask>
         <small class="p-error" *ngIf="form.get('cep')?.invalid && form.get('cep')?.touched">
           CEP é obrigatório
         </small>
       </div>
 
-      <div class="field col-12 md:col-7">
+      <div class="field col-12 md:col-5">
         <label for="logradouro">Logradouro *</label>
         <input pInputText id="logradouro" formControlName="logradouro" [disabled]="isEditMode"
                placeholder="Rua, Avenida..." class="w-full" />
@@ -82,19 +87,20 @@
                placeholder="123" class="w-full" />
       </div>
 
-      <div class="field col-12 md:col-4">
+      <div class="field col-12 md:col-3">
         <label for="complemento">Complemento</label>
         <input pInputText id="complemento" formControlName="complemento" [disabled]="isEditMode"
-               placeholder="Sala, Andar..." class="w-full" />
+               placeholder="Sala..." class="w-full" />
       </div>
 
+      <!-- Linha 2: Bairro, Cidade, UF -->
       <div class="field col-12 md:col-4">
         <label for="bairro">Bairro *</label>
         <input pInputText id="bairro" formControlName="bairro" [disabled]="isEditMode"
                placeholder="Centro" class="w-full" />
       </div>
 
-      <div class="field col-12 md:col-4">
+      <div class="field col-12 md:col-6">
         <label for="localidade">Cidade *</label>
         <input pInputText id="localidade" formControlName="localidade" [disabled]="isEditMode"
                placeholder="São Paulo" class="w-full" />
@@ -106,6 +112,7 @@
                     optionLabel="sigla" optionValue="sigla" placeholder="SP" styleClass="w-full"></p-dropdown>
       </div>
 
+      <!-- Linha 3: Estado, Região, IBGE, DDD -->
       <div class="field col-12 md:col-3">
         <label for="estado">Estado</label>
         <input pInputText id="estado" formControlName="estado" [disabled]="true" class="w-full" />
@@ -116,12 +123,12 @@
         <input pInputText id="regiao" formControlName="regiao" [disabled]="true" class="w-full" />
       </div>
 
-      <div class="field col-12 md:col-2">
+      <div class="field col-12 md:col-3">
         <label for="ibge">IBGE</label>
         <input pInputText id="ibge" formControlName="ibge" [disabled]="true" class="w-full" />
       </div>
 
-      <div class="field col-12 md:col-2">
+      <div class="field col-12 md:col-3">
         <label for="ddd">DDD</label>
         <input pInputText id="ddd" formControlName="ddd" [disabled]="true" class="w-full" />
       </div>

@@ -1,40 +1,65 @@
+:host ::ng-deep .p-card {
+  .p-card-content {
+    padding-right: 0.5rem;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+  }
+}
+
 h3 {
   color: #333;
-  margin-bottom: 1rem;
-  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
 }
 
 .form-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 .field {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.25rem;
 
   label {
     font-weight: 600;
     color: #333;
+    font-size: 0.85rem;
   }
 }
 
 .col-12 { grid-column: span 12; }
+.col-1 { grid-column: span 1; }
 .col-2 { grid-column: span 2; }
 .col-3 { grid-column: span 3; }
 .col-4 { grid-column: span 4; }
+.col-5 { grid-column: span 5; }
 .col-6 { grid-column: span 6; }
 .col-7 { grid-column: span 7; }
 
+@media (max-width: 1024px) {
+  .md\:col-1 { grid-column: span 2; }
+  .md\:col-2 { grid-column: span 3; }
+  .md\:col-3 { grid-column: span 4; }
+  .md\:col-4 { grid-column: span 6; }
+  .md\:col-5 { grid-column: span 7; }
+}
+
 @media (max-width: 768px) {
+  .md\:col-1,
   .md\:col-2,
   .md\:col-3,
   .md\:col-4,
+  .md\:col-5,
   .md\:col-6,
   .md\:col-7 {
     grid-column: span 12;
+  }
+
+  .form-grid {
+    gap: 0.75rem;
   }
 }
 
@@ -42,7 +67,7 @@ h3 {
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   padding-top: 1rem;
   border-top: 1px solid #dee2e6;
 }

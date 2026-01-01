@@ -1,4 +1,25 @@
 :host {
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+::ng-deep {
+  .p-menubar {
+    padding: 0.35rem 0.5rem;
+    min-height: auto;
+
+    .p-menubar-root-list > .p-menuitem > .p-menuitem-link {
+      padding: 0.35rem 0.5rem;
+      font-size: 0.85rem;
+
+      .p-menuitem-icon {
+        font-size: 0.85rem;
+        margin-right: 0.35rem;
+      }
+
+      .p-menuitem-text {
+        line-height: 1.2;
+      }
+    }
+  }
 }

@@ -14,7 +14,7 @@ import { switchMap } from 'rxjs/operators';
 import { PessoaFisicaService } from '../../services/pessoa-fisica.service';
 import { EnderecoService } from '../../../endereco/services/endereco.service';
 import { CriarPessoaFisicaDto, AtualizarPessoaFisicaDto } from '../../models/pessoa-fisica.model';
-import { CriarEnderecoDto } from '../../../endereco/models/endereco.model';
+import { CriarEnderecoDto, AtualizarEnderecoDto } from '../../../endereco/models/endereco.model';
 import { cpfValidator } from '../../../../shared/validators/cpf.validator';
 
 interface UF {
@@ -43,6 +43,7 @@ export class PessoaFisicaFormComponent implements OnInit {
   form!: FormGroup;
   isEditMode = false;
   pessoaId?: string;
+  enderecoId?: string;
   loading = false;
   loadingCep = false;
 
@@ -100,9 +101,9 @@ export class PessoaFisicaFormComponent implements OnInit {
     });
   }
 
-  onCepComplete(event: any) {
-    const cep = event.value?.replace(/\D/g, '');
-    if (cep && cep.length === 8) {
+  onCepComplete() {
+    const cep = this.form.get('cep')?.value?.replace(/\D/g, '');
+    if (cep && cep.length === 8 && !this.loadingCep) {
       this.consultarCep(cep);
     }
   }
@@ -145,6 +146,8 @@ export class PessoaFisicaFormComponent implements OnInit {
     this.loading = true;
     this.pessoaFisicaService.getById(this.pessoaId).subscribe({
       next: (pessoa) => {
+        this.enderecoId = pessoa.enderecoId;
+
         this.form.patchValue({
           nome: pessoa.nome,
           email: pessoa.email,
@@ -184,25 +187,52 @@ export class PessoaFisicaFormComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('onSubmit chamado');
+    console.log('Form valid:', this.form.valid);
+    console.log('Form value:', this.form.value);
+
     if (this.form.invalid) {
+      console.log('Form inválido, campos com erro:');
       Object.keys(this.form.controls).forEach(key => {
-        this.form.get(key)?.markAsTouched();
+        const control = this.form.get(key);
+        if (control?.invalid) {
+          console.log(`Campo ${key}:`, control.errors);
+        }
+        control?.markAsTouched();
       });
       return;
     }
 
     this.loading = true;
+    console.log('Iniciando salvamento...');
 
     if (this.isEditMode && this.pessoaId) {
-      const dto: AtualizarPessoaFisicaDto = {
-        nome: this.form.value.nome,
-        email: this.form.value.email,
-        telefone: this.form.value.telefone,
-        dataNascimento: this.formatDate(this.form.value.dataNascimento),
-        rg: this.form.value.rg
+      const enderecoDto: AtualizarEnderecoDto = {
+        cep: this.form.value.cep,
+        logradouro: this.form.value.logradouro,
+        numero: this.form.value.numero,
+        complemento: this.form.value.complemento,
+        bairro: this.form.value.bairro,
+        localidade: this.form.value.localidade,
+        uf: this.form.value.uf,
+        estado: this.form.value.estado,
+        regiao: this.form.value.regiao,
+        ibge: this.form.value.ibge,
+        ddd: this.form.value.ddd
       };
 
-      this.pessoaFisicaService.update(this.pessoaId, dto).subscribe({
+      this.enderecoService.update(this.enderecoId!, enderecoDto).pipe(
+        switchMap(() => {
+          const pessoaDto: AtualizarPessoaFisicaDto = {
+            nome: this.form.value.nome,
+            email: this.form.value.email,
+            telefone: this.form.value.telefone,
+            dataNascimento: this.formatDate(this.form.value.dataNascimento),
+            rg: this.form.value.rg
+          };
+          return this.pessoaFisicaService.update(this.pessoaId!, pessoaDto);
+        })
+      ).subscribe({
         next: () => {
           this.messageService.add({
             severity: 'success',
@@ -211,11 +241,13 @@ export class PessoaFisicaFormComponent implements OnInit {
           });
           this.router.navigate(['/pessoa-fisica']);
         },
-        error: () => {
+        error: (error) => {
+          console.error('Erro ao atualizar pessoa física:', error);
+          const errorMessage = error?.error?.message || error?.message || 'Erro ao atualizar pessoa física';
           this.messageService.add({
             severity: 'error',
             summary: 'Erro',
-            detail: 'Erro ao atualizar pessoa física'
+            detail: errorMessage
           });
           this.loading = false;
         }

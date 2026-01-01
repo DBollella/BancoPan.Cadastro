@@ -1,10 +1,26 @@
-<p-card header="Endereços">
-  <div class="actions">
-    <p-button label="Novo Endereço" icon="pi pi-plus" severity="success" (onClick)="router.navigate(['/enderecos/novo'])"></p-button>
-  </div>
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="card-header">
+      <span class="card-title">Endereços</span>
+      <p-button label="Novo Endereço" icon="pi pi-plus" severity="success" (onClick)="router.navigate(['/enderecos/novo'])"></p-button>
+    </div>
+  </ng-template>
 
-  <p-table [value]="enderecos" [loading]="loading" [paginator]="true" [rows]="10"
-           [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} endereços">
+  <p-table
+    [value]="enderecos"
+    [lazy]="true"
+    (onLazyLoad)="loadEnderecos($event)"
+    [loading]="loading"
+    [paginator]="true"
+    [rows]="rows"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="rowsPerPageOptions"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} endereços"
+    [first]="first"
+    [scrollable]="true"
+    scrollHeight="flex"
+    styleClass="p-datatable-sm p-datatable-striped">
     <ng-template pTemplate="header">
       <tr>
         <th>CEP</th>

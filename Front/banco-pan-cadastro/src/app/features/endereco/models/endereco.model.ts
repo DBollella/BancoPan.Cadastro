@@ -28,11 +28,17 @@ export interface CriarEnderecoDto {
 }
 
 export interface AtualizarEnderecoDto {
+  cep: string;
   logradouro: string;
   numero: string;
   complemento?: string;
   bairro: string;
   localidade: string;
+  uf: string;
+  estado: string;
+  regiao: string;
+  ibge: string;
+  ddd: string;
 }
 
 export interface ViaCepResponse {

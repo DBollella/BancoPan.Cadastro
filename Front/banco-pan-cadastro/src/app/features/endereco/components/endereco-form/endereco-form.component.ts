@@ -102,16 +102,9 @@ export class EnderecoFormComponent implements OnInit {
     });
   }
 
-  buscarCep() {
+  onCepComplete() {
     const cep = this.form.get('cep')?.value?.replace(/\D/g, '');
-    if (cep && cep.length === 8) {
-      this.consultarCep(cep);
-    }
-  }
-
-  onCepComplete(event: any) {
-    const cep = event.value?.replace(/\D/g, '');
-    if (cep && cep.length === 8) {
+    if (cep && cep.length === 8 && !this.loadingCep) {
       this.consultarCep(cep);
     }
   }
@@ -181,11 +174,17 @@ export class EnderecoFormComponent implements OnInit {
 
     if (this.isEditMode && this.enderecoId) {
       const dto: AtualizarEnderecoDto = {
+        cep: this.form.value.cep,
         logradouro: this.form.value.logradouro,
         numero: this.form.value.numero,
         complemento: this.form.value.complemento,
         bairro: this.form.value.bairro,
-        localidade: this.form.value.localidade
+        localidade: this.form.value.localidade,
+        uf: this.form.value.uf,
+        estado: this.form.value.estado,
+        regiao: this.form.value.regiao,
+        ibge: this.form.value.ibge,
+        ddd: this.form.value.ddd
       };
 
       this.enderecoService.update(this.enderecoId, dto).subscribe({

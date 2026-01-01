@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { PessoaFisica, CriarPessoaFisicaDto, AtualizarPessoaFisicaDto } from '../models/pessoa-fisica.model';
+import { PagedResult } from '../../../shared/models/pagination.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,14 @@ export class PessoaFisicaService {
 
   getAll(): Observable<PessoaFisica[]> {
     return this.http.get<PessoaFisica[]>(this.apiUrl);
+  }
+
+  getPaginated(pageNumber: number, pageSize: number): Observable<PagedResult<PessoaFisica>> {
+    const params = new HttpParams()
+      .set('pageNumber', pageNumber.toString())
+      .set('pageSize', pageSize.toString());
+
+    return this.http.get<PagedResult<PessoaFisica>>(`${this.apiUrl}/paginado`, { params });
   }
 
   getById(id: string): Observable<PessoaFisica> {

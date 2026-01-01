@@ -1,10 +1,26 @@
-<p-card header="Pessoa Física">
-  <div class="actions">
-    <p-button label="Nova Pessoa Física" icon="pi pi-plus" severity="success" (onClick)="router.navigate(['/pessoa-fisica/novo'])"></p-button>
-  </div>
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="card-header">
+      <span class="card-title">Pessoa Física</span>
+      <p-button label="Nova Pessoa Física" icon="pi pi-plus" severity="success" (onClick)="router.navigate(['/pessoa-fisica/novo'])"></p-button>
+    </div>
+  </ng-template>
 
-  <p-table [value]="pessoas" [loading]="loading" [paginator]="true" [rows]="10"
-           [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} pessoas">
+  <p-table
+    [value]="pessoas"
+    [lazy]="true"
+    (onLazyLoad)="loadPessoas($event)"
+    [loading]="loading"
+    [paginator]="true"
+    [rows]="rows"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="rowsPerPageOptions"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} pessoas"
+    [first]="first"
+    [scrollable]="true"
+    scrollHeight="flex"
+    styleClass="p-datatable-sm p-datatable-striped">
     <ng-template pTemplate="header">
       <tr>
         <th>Nome</th>

@@ -1,31 +1,20 @@
 <p-card [header]="isEditMode ? 'Editar Endereço' : 'Novo Endereço'">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="form-grid">
-      <div class="field col-12 md:col-3">
+      <div class="field col-12 md:col-4">
         <label for="cep">CEP *</label>
         <p-inputMask
           id="cep"
           formControlName="cep"
           mask="99999-999"
           placeholder="00000-000"
-          (onComplete)="onCepComplete($event)"
+          (onComplete)="onCepComplete()"
           [disabled]="loadingCep"
           styleClass="w-full">
         </p-inputMask>
         <small class="p-error" *ngIf="form.get('cep')?.invalid && form.get('cep')?.touched">
           CEP é obrigatório
         </small>
-      </div>
-
-      <div class="field col-12 md:col-1 flex align-items-end">
-        <p-button
-          icon="pi pi-search"
-          label="Buscar"
-          [loading]="loadingCep"
-          [disabled]="!form.get('cep')?.value || loadingCep"
-          (onClick)="buscarCep()"
-          styleClass="w-full">
-        </p-button>
       </div>
 
       <div class="field col-12 md:col-6">

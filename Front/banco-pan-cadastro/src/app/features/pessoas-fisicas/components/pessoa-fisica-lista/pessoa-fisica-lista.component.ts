@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { TableModule } from 'primeng/table';
+import { TableModule, TableLazyLoadEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { TooltipModule } from 'primeng/tooltip';
@@ -21,6 +21,10 @@ import { CpfPipe } from '../../../../shared/pipes/cpf.pipe';
 export class PessoaFisicaListaComponent implements OnInit {
   pessoas: PessoaFisica[] = [];
   loading = false;
+  totalRecords = 0;
+  rows = 10;
+  first = 0;
+  rowsPerPageOptions = [5, 10, 20, 30, 50, 100];
 
   constructor(
     private pessoaFisicaService: PessoaFisicaService,
@@ -31,20 +35,30 @@ export class PessoaFisicaListaComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.loadPessoas();
+    this.loadPessoas({ first: 0, rows: this.rows });
   }
 
-  loadPessoas() {
+  loadPessoas(event: TableLazyLoadEvent) {
     this.loading = true;
-    this.pessoaFisicaService.getAll()
+
+    const pageNumber = (event.first! / event.rows!) + 1;
+    const pageSize = event.rows || 10;
+
+    this.first = event.first || 0;
+    this.rows = event.rows || 10;
+
+    this.pessoaFisicaService.getPaginated(pageNumber, pageSize)
       .pipe(
-        finalize(() => this.loading = false)
+        finalize(() => {
+          this.loading = false;
+          this.cdr.detectChanges();
+        })
       )
       .subscribe({
         next: (data) => {
           console.log('Dados recebidos:', data);
-          this.pessoas = data;
-          this.cdr.detectChanges();
+          this.pessoas = data.items;
+          this.totalRecords = data.totalCount;
         },
         error: (error) => {
           console.error('Erro ao carregar pessoas físicas:', error);
@@ -76,7 +90,7 @@ export class PessoaFisicaListaComponent implements OnInit {
           summary: 'Sucesso',
           detail: 'Pessoa física excluída com sucesso'
         });
-        this.loadPessoas();
+        this.loadPessoas({ first: this.first, rows: this.rows });
       },
       error: () => {
         this.messageService.add({
