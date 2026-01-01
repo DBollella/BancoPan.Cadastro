@@ -11,7 +11,31 @@ using StackExchange.Redis;
 var builder = WebApplication.CreateBuilder(args);
 
 var redisConnection = builder.Configuration.GetValue<string>("Redis:ConnectionString") ?? "localhost:6379";
-builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisConnection));
+builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+{
+    try
+    {
+        var logger = sp.GetRequiredService<ILogger<Program>>();
+        logger.LogInformation("Tentando conectar ao Redis em: {RedisConnection}", redisConnection);
+
+        var connection = ConnectionMultiplexer.Connect(redisConnection);
+
+        if (connection.IsConnected)
+        {
+            logger.LogInformation("Conexão com Redis estabelecida com sucesso");
+            return connection;
+        }
+
+        logger.LogWarning("Redis não está conectado. A aplicação continuará sem cache");
+        return null!;
+    }
+    catch (Exception ex)
+    {
+        var logger = sp.GetRequiredService<ILogger<Program>>();
+        logger.LogWarning(ex, "Não foi possível conectar ao Redis. A aplicação continuará sem cache");
+        return null!;
+    }
+});
 builder.Services.AddSingleton<ICacheService, RedisCacheService>();
 
 builder.Services.AddDbContext<CadastroDbContext>(options =>
@@ -47,13 +71,12 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
         options.JsonSerializerOptions.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
     });
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-//Adicionar migrations para funcionar no Docker. 
+
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -76,7 +99,6 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "QA")
 {
     app.UseSwagger();

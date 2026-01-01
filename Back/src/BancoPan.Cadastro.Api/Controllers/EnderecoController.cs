@@ -1,5 +1,6 @@
 using BancoPan.Cadastro.Application.DTOs;
 using BancoPan.Cadastro.Application.Interfaces;
+using BancoPan.Cadastro.Domain.Common;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BancoPan.Cadastro.Api.Controllers;
@@ -20,6 +21,19 @@ public class EnderecoController : ControllerBase
     {
         var enderecos = await _enderecoService.ObterTodosAsync();
         return Ok(enderecos);
+    }
+
+    [HttpGet("paginado")]
+    public async Task<ActionResult<PagedResultDto<EnderecoDto>>> ObterPaginado([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+    {
+        var parameters = new PaginationParameters
+        {
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        };
+
+        var result = await _enderecoService.ObterPaginadoAsync(parameters);
+        return Ok(result);
     }
 
     [HttpGet("{id}")]

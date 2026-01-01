@@ -1,6 +1,7 @@
 using BancoPan.Cadastro.Application.DTOs;
 using BancoPan.Cadastro.Application.Interfaces;
 using BancoPan.Cadastro.Application.Services;
+using BancoPan.Cadastro.Domain.Common;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BancoPan.Cadastro.Api.Controllers;
@@ -21,6 +22,19 @@ public class PessoaFisicaController : ControllerBase
     {
         var pessoas = await _pessoaFisicaService.ObterTodosAsync();
         return Ok(pessoas);
+    }
+
+    [HttpGet("paginado")]
+    public async Task<ActionResult<PagedResultDto<PessoaFisicaDto>>> ObterPaginado([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+    {
+        var parameters = new PaginationParameters
+        {
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        };
+
+        var result = await _pessoaFisicaService.ObterPaginadoAsync(parameters);
+        return Ok(result);
     }
 
     [HttpGet("{id}")]

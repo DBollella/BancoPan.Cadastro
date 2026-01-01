@@ -1,5 +1,6 @@
 using BancoPan.Cadastro.Application.DTOs;
 using BancoPan.Cadastro.Application.Interfaces;
+using BancoPan.Cadastro.Domain.Common;
 using BancoPan.Cadastro.Domain.Entities;
 using BancoPan.Cadastro.Domain.Interfaces;
 
@@ -42,19 +43,41 @@ public class EnderecoService : IEnderecoService
 
     public async Task<IEnumerable<EnderecoDto>> ObterTodosAsync()
     {
-        // Tenta buscar do cache
         var cached = await _cacheService.GetAsync<List<EnderecoDto>>(CacheKeyAll);
         if (cached != null)
             return cached;
 
-        // Se não está em cache, busca do banco
         var enderecos = await _unitOfWork.Enderecos.ObterTodosAsync();
         var dtos = enderecos.Select(MapearParaDto).ToList();
 
-        // Armazena no cache por 5 minutos
         await _cacheService.SetAsync(CacheKeyAll, dtos, TimeSpan.FromMinutes(5));
 
         return dtos;
+    }
+
+    public async Task<PagedResultDto<EnderecoDto>> ObterPaginadoAsync(PaginationParameters parameters)
+    {
+        var cacheKey = $"{CachePrefix}:paginado:page{parameters.PageNumber}:size{parameters.PageSize}";
+        var cached = await _cacheService.GetAsync<PagedResultDto<EnderecoDto>>(cacheKey);
+        if (cached != null)
+            return cached;
+
+        var result = await _unitOfWork.Enderecos.ObterPaginadoAsync(parameters);
+
+        var dto = new PagedResultDto<EnderecoDto>
+        {
+            Items = result.Items.Select(MapearParaDto),
+            PageNumber = result.PageNumber,
+            PageSize = result.PageSize,
+            TotalCount = result.TotalCount,
+            TotalPages = result.TotalPages,
+            HasPreviousPage = result.HasPreviousPage,
+            HasNextPage = result.HasNextPage
+        };
+
+        await _cacheService.SetAsync(cacheKey, dto, TimeSpan.FromMinutes(5));
+
+        return dto;
     }
 
     public async Task<EnderecoDto?> ConsultarViaCepAsync(string cep)
@@ -97,7 +120,6 @@ public class EnderecoService : IEnderecoService
         await _unitOfWork.Enderecos.AdicionarAsync(endereco);
         await _unitOfWork.CommitAsync();
 
-        // Invalida cache ao criar
         await _cacheService.RemoveByPrefixAsync(CachePrefix);
 
         return MapearParaDto(endereco);
@@ -111,17 +133,22 @@ public class EnderecoService : IEnderecoService
             return null;
 
         endereco.Atualizar(
+            dto.Cep,
             dto.Logradouro,
             dto.Numero,
             dto.Bairro,
             dto.Localidade,
+            dto.Uf,
+            dto.Estado,
+            dto.Regiao,
+            dto.Ibge,
+            dto.Ddd,
             dto.Complemento
         );
 
         await _unitOfWork.Enderecos.AtualizarAsync(endereco);
         await _unitOfWork.CommitAsync();
 
-        // Invalida cache ao atualizar
         await _cacheService.RemoveByPrefixAsync(CachePrefix);
 
         return MapearParaDto(endereco);
@@ -135,7 +162,6 @@ public class EnderecoService : IEnderecoService
         await _unitOfWork.Enderecos.RemoverAsync(id);
         await _unitOfWork.CommitAsync();
 
-        // Invalida cache ao remover
         await _cacheService.RemoveByPrefixAsync(CachePrefix);
 
         return true;

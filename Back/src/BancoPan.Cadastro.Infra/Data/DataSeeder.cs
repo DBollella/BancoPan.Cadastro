@@ -17,18 +17,15 @@ public class DataSeeder
         var random = new Random(seed + 12345);
         var cpf = new int[11];
 
-        // Generate first 9 digits
         for (int i = 0; i < 9; i++)
             cpf[i] = random.Next(0, 10);
 
-        // Calculate first verification digit
         var soma = 0;
         for (int i = 0; i < 9; i++)
             soma += cpf[i] * (10 - i);
         var resto = soma % 11;
         cpf[9] = resto < 2 ? 0 : 11 - resto;
 
-        // Calculate second verification digit
         soma = 0;
         for (int i = 0; i < 10; i++)
             soma += cpf[i] * (11 - i);

@@ -30,14 +30,7 @@ public class Endereco : Entity
         string? complemento = null)
     {
         ValidarCep(cep);
-        ValidarCampoObrigatorio(logradouro, nameof(Logradouro));
-        ValidarCampoObrigatorio(numero, nameof(Numero));
-        ValidarCampoObrigatorio(bairro, nameof(Bairro));
-        ValidarCampoObrigatorio(localidade, nameof(Localidade));
         ValidarUf(uf);
-        ValidarCampoObrigatorio(estado, nameof(Estado));
-        ValidarCampoObrigatorio(regiao, nameof(Regiao));
-
         Cep = RemoverFormatacaoCep(cep);
         Logradouro = logradouro;
         Numero = numero;
@@ -52,22 +45,31 @@ public class Endereco : Entity
     }
 
     public void Atualizar(
+        string cep,
         string logradouro,
         string numero,
         string bairro,
         string localidade,
+        string uf,
+        string estado,
+        string regiao,
+        string ibge,
+        string ddd,
         string? complemento = null)
     {
-        ValidarCampoObrigatorio(logradouro, nameof(Logradouro));
-        ValidarCampoObrigatorio(numero, nameof(Numero));
-        ValidarCampoObrigatorio(bairro, nameof(Bairro));
-        ValidarCampoObrigatorio(localidade, nameof(Localidade));
-
+        ValidarCep(cep);
+        ValidarUf(uf);
+        Cep = RemoverFormatacaoCep(cep);
         Logradouro = logradouro;
         Numero = numero;
         Complemento = complemento;
         Bairro = bairro;
         Localidade = localidade;
+        Uf = uf.ToUpper();
+        Estado = estado;
+        Regiao = regiao;
+        Ibge = ibge;
+        Ddd = ddd;
         AtualizarDataModificacao();
     }
 
@@ -88,12 +90,6 @@ public class Endereco : Entity
 
         if (uf.Length != 2)
             throw new ArgumentException("UF deve ter 2 caracteres", nameof(uf));
-    }
-
-    private static void ValidarCampoObrigatorio(string valor, string nomeCampo)
-    {
-        if (string.IsNullOrWhiteSpace(valor))
-            throw new ArgumentException($"{nomeCampo} é obrigatório", nomeCampo);
     }
 
     private static string RemoverFormatacaoCep(string cep)

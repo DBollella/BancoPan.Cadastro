@@ -1,3 +1,4 @@
+using BancoPan.Cadastro.Domain.Common;
 using BancoPan.Cadastro.Domain.Entities;
 using BancoPan.Cadastro.Domain.Interfaces;
 using BancoPan.Cadastro.Infra.Data;
@@ -24,6 +25,20 @@ public class Repository<T> : IRepository<T> where T : Entity
     public virtual async Task<IEnumerable<T>> ObterTodosAsync()
     {
         return await _dbSet.ToListAsync();
+    }
+
+    public virtual async Task<PagedResult<T>> ObterPaginadoAsync(PaginationParameters parameters)
+    {
+        var query = _dbSet.AsQueryable();
+
+        var totalCount = await query.CountAsync();
+
+        var items = await query
+            .Skip((parameters.PageNumber - 1) * parameters.PageSize)
+            .Take(parameters.PageSize)
+            .ToListAsync();
+
+        return new PagedResult<T>(items, totalCount, parameters.PageNumber, parameters.PageSize);
     }
 
     public virtual async Task AdicionarAsync(T entity)

@@ -25,7 +25,6 @@ public abstract class Pessoa : Entity
     {
         ValidarNome(nome);
         ValidarEmail(email);
-
         Nome = nome;
         Email = email;
         Telefone = telefone;

@@ -1,5 +1,6 @@
 using BancoPan.Cadastro.Application.DTOs;
 using BancoPan.Cadastro.Application.Interfaces;
+using BancoPan.Cadastro.Domain.Common;
 using BancoPan.Cadastro.Domain.Entities;
 using BancoPan.Cadastro.Domain.Interfaces;
 
@@ -64,6 +65,31 @@ public class PessoaFisicaService : IPessoaFisicaService
         await _cacheService.SetAsync(CacheKeyAll, dtos, TimeSpan.FromMinutes(5));
 
         return dtos;
+    }
+
+    public async Task<PagedResultDto<PessoaFisicaDto>> ObterPaginadoAsync(PaginationParameters parameters)
+    {
+        var cacheKey = $"{CachePrefix}:paginado:page{parameters.PageNumber}:size{parameters.PageSize}";
+        var cached = await _cacheService.GetAsync<PagedResultDto<PessoaFisicaDto>>(cacheKey);
+        if (cached != null)
+            return cached;
+
+        var result = await _unitOfWork.PessoasFisicas.ObterPaginadoAsync(parameters);
+
+        var dto = new PagedResultDto<PessoaFisicaDto>
+        {
+            Items = result.Items.Select(MapearParaDto),
+            PageNumber = result.PageNumber,
+            PageSize = result.PageSize,
+            TotalCount = result.TotalCount,
+            TotalPages = result.TotalPages,
+            HasPreviousPage = result.HasPreviousPage,
+            HasNextPage = result.HasNextPage
+        };
+
+        await _cacheService.SetAsync(cacheKey, dto, TimeSpan.FromMinutes(5));
+
+        return dto;
     }
 
     public async Task<PessoaFisicaDto> CriarAsync(CriarPessoaFisicaDto dto)

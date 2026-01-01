@@ -34,7 +34,6 @@ public class PessoaFisica : Pessoa
         string? rg = null)
     {
         ValidarDataNascimento(dataNascimento);
-
         AtualizarDadosComuns(nome, email, telefone);
         DataNascimento = dataNascimento;
         Rg = rg;
