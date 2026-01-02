@@ -1,9 +1,8 @@
 # BancoPan.Cadastro 
 
-<img width="1170" height="671" alt="image" src="https://github.com/user-attachments/assets/d22d4c2e-f87a-491a-8d81-299a95143f8f" />
-
-
 ## Para executar o Projeto ler: README EXECUTANDO O PROJETO.md
+
+<img width="1170" height="671" alt="image" src="https://github.com/user-attachments/assets/d22d4c2e-f87a-491a-8d81-299a95143f8f" />
 
 ## Tecnologias Utilizadas Back-End
 - **.NET 8**: Framework principal.
