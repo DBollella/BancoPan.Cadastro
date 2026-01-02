@@ -1,4 +1,4 @@
-# README INICIAL - Banco Pan Cadastro
+# README EXECUTANDO O PROJETO - Banco Pan Cadastro
 
 Guia rápido para iniciar o ambiente de desenvolvimento usando Docker Compose.
 
