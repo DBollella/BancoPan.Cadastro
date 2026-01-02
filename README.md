@@ -2,7 +2,7 @@
 
 ## Para executar o Projeto ler: README EXECUTANDO O PROJETO.md
 
-## Tecnologias Utilizadas
+## Tecnologias Utilizadas Back-End
 - **.NET 8**: Framework principal.
 - **ASP.NET Core Web API**: Framework web.
 - **Entity Framework Core 8**: ORM.
@@ -12,11 +12,18 @@
 - **NSubstitute**: Framework para mockar dependencias dos testes.
 - **Swagger**: Documentação da API.
 
+## Tecnologias Utilizadas Front-End
+  - **Angular 21**: O Angular é um framework amplamente utilizado para criar aplicações web dinâmicas e interativas.
+  - **PrimeNG 17**: Biblioteca de componentes Angular para interfaces elegantes e interativas.
+
 ## Integrações
 - **ViaCep** Consulta de endereços para facilitar o preenchimento do usuario.
 
 ## Lazy Load
   Implementado paginação e cache.
+
+## CRUD
+  Criado implementação do CRUD para Endereço, Pessoa Fisica e Pessoa Juridica.
 
 ## Design Patterns Utilizados
 ### 1. Repository Pattern
