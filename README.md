@@ -2,7 +2,17 @@
 
 ## Para executar o Projeto ler: README EXECUTANDO O PROJETO.md
 
-<img width="1170" height="671" alt="image" src="https://github.com/user-attachments/assets/d22d4c2e-f87a-491a-8d81-299a95143f8f" />
+<img width="1884" height="832" alt="image" src="https://github.com/user-attachments/assets/24bde863-b228-498b-8a5c-05f785ff2e77" />
+Tela principal
+
+<img width="1896" height="867" alt="image" src="https://github.com/user-attachments/assets/c7ad2826-d71e-4fe7-b3a8-f2c5dd255184" />
+Grid Pessoa-Fisica
+
+<img width="1880" height="800" alt="image" src="https://github.com/user-attachments/assets/29457c5d-0112-43c9-b9d6-e2e34bedefc8" />
+Busca CEP
+
+
+
 
 ## Tecnologias Utilizadas Back-End
 - **.NET 8**: Framework principal.
