@@ -25,7 +25,7 @@ Para facilitar a navegação do sistema, adicionei 2 Endpoints para a criação 
 cd Back
 iwr -Uri "http://localhost:5000/api/Seed/execute" -Method POST -ContentType "application/json"
 iwr -Uri "http://localhost:5000/api/Seed/execute-1000-pessoas-fisicas" -Method POST -ContentType "application/json"
-```bash
+```
 
 ## Iniciar Ambiente - FORMA MANUAL
 
