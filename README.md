@@ -1,4 +1,4 @@
-# BancoPan.Cadastro - API de Cadastro
+# BancoPan.Cadastro 
 
 ## Para executar o Projeto ler: README EXECUTANDO O PROJETO.md
 
