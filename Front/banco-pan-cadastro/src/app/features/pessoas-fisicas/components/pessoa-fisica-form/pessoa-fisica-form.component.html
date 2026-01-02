@@ -4,7 +4,6 @@
     <!-- Dados Pessoais -->
     <h3>Dados Pessoais</h3>
     <div class="form-grid">
-      <!-- Linha 1: Nome Completo -->
       <div class="field col-12">
         <label for="nome">Nome Completo *</label>
         <input pInputText id="nome" formControlName="nome" placeholder="João da Silva" class="w-full" />
@@ -13,7 +12,6 @@
         </small>
       </div>
 
-      <!-- Linha 2: Email, CPF, RG -->
       <div class="field col-12 md:col-4">
         <label for="email">E-mail *</label>
         <input pInputText id="email" formControlName="email" type="email" placeholder="joao@email.com" class="w-full" />
@@ -36,7 +34,6 @@
         <input pInputText id="rg" formControlName="rg" placeholder="12.345.678-9" class="w-full" />
       </div>
 
-      <!-- Linha 3: Telefone, Data Nascimento -->
       <div class="field col-12 md:col-6">
         <label for="telefone">Telefone</label>
         <p-inputMask id="telefone" formControlName="telefone" mask="(99) 99999-9999"
@@ -58,7 +55,6 @@
     <!-- Endereço -->
     <h3>Endereço</h3>
     <div class="form-grid">
-      <!-- Linha 1: CEP, Logradouro, Número, Complemento -->
       <div class="field col-12 md:col-2">
         <label for="cep">CEP *</label>
         <p-inputMask id="cep" formControlName="cep" mask="99999-999" placeholder="00000-000"
@@ -88,7 +84,6 @@
                placeholder="Apto..." class="w-full" />
       </div>
 
-      <!-- Linha 2: Bairro, Cidade, UF -->
       <div class="field col-12 md:col-4">
         <label for="bairro">Bairro *</label>
         <input pInputText id="bairro" formControlName="bairro" [disabled]="isEditMode"
@@ -107,7 +102,6 @@
                     optionLabel="sigla" optionValue="sigla" placeholder="SP" styleClass="w-full"></p-dropdown>
       </div>
 
-      <!-- Linha 3: Estado, Região, IBGE, DDD -->
       <div class="field col-12 md:col-3">
         <label for="estado">Estado</label>
         <input pInputText id="estado" formControlName="estado" [disabled]="true" class="w-full" />
