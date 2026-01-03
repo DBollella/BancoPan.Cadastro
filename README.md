@@ -42,6 +42,11 @@
 ## CRUD
   Criado implementação do CRUD para Endereço, Pessoa Fisica e Pessoa Juridica.
 
+## Separação do Header, Footer e Menu
+
+## Testes Unitários (60 Testes)
+<img width="644" height="442" alt="image" src="https://github.com/user-attachments/assets/7c28b7cd-fb38-436e-a410-a4089c3380bd" />
+
 ## Design Patterns Utilizados
 ### 1. Repository Pattern
 Abstração da camada de acesso a dados, permitindo fácil substituição da implementação.
