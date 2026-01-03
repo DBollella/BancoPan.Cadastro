@@ -1,4 +1,4 @@
-# README INICIAL - Banco Pan Cadastro
+# README EXECUTANDO O PROJETO - Banco Pan Cadastro
 
 Guia rápido para iniciar o ambiente de desenvolvimento usando Docker Compose.
 
@@ -16,6 +16,16 @@ cd Back
 .\PREPARAR-AMBIENTE
 ```
 O script faz tudo automaticamente: verifica Docker, limpa ambiente antigo, constrói imagens e inicia todos os serviços.
+
+Ao subir a API base de dados é atualizada com a estrutura atual das tabelas.
+
+Para facilitar a navegação do sistema, adicionei 2 Endpoints para a criação de massa de dados:
+
+```bash
+cd Back
+iwr -Uri "http://localhost:5000/api/Seed/execute" -Method POST -ContentType "application/json"
+iwr -Uri "http://localhost:5000/api/Seed/execute-1000-pessoas-fisicas" -Method POST -ContentType "application/json"
+```
 
 ## Iniciar Ambiente - FORMA MANUAL
 
