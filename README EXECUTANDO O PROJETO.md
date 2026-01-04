@@ -28,6 +28,9 @@ iwr -Uri "http://localhost:5000/api/Seed/execute" -Method POST -ContentType "app
 iwr -Uri "http://localhost:5000/api/Seed/execute-1000-pessoas-fisicas" -Method POST -ContentType "application/json"
 ```
 
+Abra o front-end e navegue:
+http://localhost:4200
+
 ## Iniciar Ambiente - FORMA MANUAL
 
 # 1. Build do Frontend
