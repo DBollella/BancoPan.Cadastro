@@ -39,6 +39,9 @@
 ## Lazy Load
   Implementado paginação e cache.
 
+  <img width="1595" height="1050" alt="image" src="https://github.com/user-attachments/assets/793d7bee-8132-47cb-953c-f507c5d38727" />
+
+
 ## CRUD
   Criado implementação do CRUD para Endereço, Pessoa Fisica e Pessoa Juridica.
 
