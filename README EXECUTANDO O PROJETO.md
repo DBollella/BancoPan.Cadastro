@@ -13,6 +13,7 @@ Obs: Executar comandos no PowerShell
 
 ```bash
 cd Back
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 .\PREPARAR-AMBIENTE
 ```
 O script faz tudo automaticamente: verifica Docker, limpa ambiente antigo, constrói imagens e inicia todos os serviços.
