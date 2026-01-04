@@ -44,6 +44,8 @@
 
 ## CRUD
   Criado implementação do CRUD para Endereço, Pessoa Fisica e Pessoa Juridica.
+  <img width="917" height="912" alt="image" src="https://github.com/user-attachments/assets/b9137887-86d5-4f4e-868b-e79a7896a6f9" />
+
 
 ## Separação do Header, Footer e Menu
 
